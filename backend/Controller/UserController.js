@@ -3,6 +3,7 @@ const User = require("../Model/User");
 const bcrypt = require("bcryptjs");
 const JWT = require("jsonwebtoken");
 
+// Creation logic
 exports.createUser = (req, res) => {
   console.log("request", req.body);
   const { email, firstName, lastName, password } = req.body;
@@ -64,6 +65,8 @@ exports.createUser = (req, res) => {
   });
 };
 
+// Login logic
+
 exports.loginUser = (req, res) => {
   const { email, password } = req.body;
 
@@ -107,4 +110,59 @@ exports.loginUser = (req, res) => {
       }
     }
   });
+};
+
+// Update Logic
+
+exports.updateUser = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const updatedUser = await User.findOneAndUpdate({ id: id }, req.body, {
+      new: true,
+    });
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Delete Logic
+
+exports.deleteUser = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    await User.findOneAndDelete({ id: id });
+
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Get all users
+
+exports.getUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Get user by id
+
+exports.getUserById = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const user = await User.findOne({ id: id });
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };
