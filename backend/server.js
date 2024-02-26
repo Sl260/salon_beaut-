@@ -2,6 +2,8 @@ require("dotenv").config({ path: ".env" });
 const cors = require("cors");
 const express = require("express");
 const UserRoute = require("./Route/UserRoute");
+const AppointmentRoute = require("./Route/AppointmentRoute");
+
 const mongoose = require("mongoose");
 
 const URL = process.env.MONGODB_URI;
@@ -25,3 +27,4 @@ mongoose
 // Enable CORS
 app.use(cors());
 app.use("/", UserRoute);
+app.use("/", AppointmentRoute);

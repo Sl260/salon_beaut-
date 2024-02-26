@@ -13,6 +13,8 @@ const BeautyShop = () => {
         />
         <h1>SNM, L'APPART BEAUTE </h1>
         <p>Indulge in a luxurious experience at our beauty haven.</p>
+
+        <Button href="/appointment">Book an Appointment</Button>
       </Header>
       <Main>
         <h2>Our Services</h2>
@@ -50,7 +52,6 @@ const BeautyShop = () => {
             products to provide exceptional service in a relaxing and welcoming
             environment.
           </p>
-          <Button href="#">Book an Appointment</Button>
         </Section2>
       </Main>
       <footer>
@@ -125,6 +126,7 @@ const ServiceCard = styled.div`
   align-items: center;
   margin: 1rem;
   padding: 1rem;
+  max-width: 350px;
   background-color: white;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -146,5 +148,9 @@ const ServiceImage = styled.img`
 
 const Button = styled.a`
   display: inline-block;
-  padding: 10px;
+  padding: 10px 2rem;
+  background-color: #0a51f6;
+  text-decoration: none;
+  color: white;
+  border-radius: 12px;
 `;

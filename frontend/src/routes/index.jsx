@@ -6,6 +6,7 @@ import ServicePage from "../pages/ServicePage";
 import AboutPage from "../pages/AboutPage";
 import RegisterPage from "../pages/RegisterPage";
 import AppointmentsPage from "../pages/AppointmentsPage";
+import AppointmentPage from "../pages/AppointmentPage";
 
 const Routes = () => {
   const { token } = useAuth();
@@ -15,6 +16,10 @@ const Routes = () => {
     {
       path: "/",
       element: <HomePage />,
+    },
+    {
+      path: "/appointment",
+      element: <AppointmentPage />,
     },
     {
       path: "/service",
