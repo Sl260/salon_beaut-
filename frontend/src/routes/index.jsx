@@ -1,6 +1,11 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { useAuth } from "../provider/authProvider";
-import { ProtectedRoute } from "./ProtectedRoute";
+import HomePage from "../pages/HomePage";
+import LoginPage from "../pages/LoginPage";
+import ServicePage from "../pages/ServicePage";
+import AboutPage from "../pages/AboutPage";
+import RegisterPage from "../pages/RegisterPage";
+import AppointmentsPage from "../pages/AppointmentsPage";
 
 const Routes = () => {
   const { token } = useAuth();
@@ -8,32 +13,28 @@ const Routes = () => {
   // Define public routes accessible to all users
   const routesForPublic = [
     {
+      path: "/",
+      element: <HomePage />,
+    },
+    {
       path: "/service",
-      element: <div>Service Page</div>,
+      element: <ServicePage />,
     },
     {
       path: "/about-us",
-      element: <div>About Us</div>,
+      element: <AboutPage />,
     },
   ];
 
   // Define routes accessible only to authenticated users
   const routesForAuthenticatedOnly = [
     {
-      path: "/",
-      element: <ProtectedRoute />, // Wrap the component in ProtectedRoute
+      path: "/appointments",
+      element: <AppointmentsPage />, // Wrap the component in ProtectedRoute
       children: [
         {
-          path: "/",
-          element: <div>User Home Page</div>,
-        },
-        {
-          path: "/profile",
-          element: <div>User Profile</div>,
-        },
-        {
-          path: "/logout",
-          element: <div>Logout</div>,
+          path: "/appointments",
+          element: <AppointmentsPage />,
         },
       ],
     },
@@ -42,24 +43,28 @@ const Routes = () => {
   // Define routes accessible only to non-authenticated users
   const routesForNotAuthenticatedOnly = [
     {
-      path: "/",
-      element: <div>Home Page</div>,
+      path: "/login",
+      element: <LoginPage />,
     },
     {
-      path: "/login",
-      element: <div>Login</div>,
+      path: "/register",
+      element: <RegisterPage />,
     },
   ];
 
   // Combine and conditionally include routes based on authentication status
   const router = createBrowserRouter([
     ...routesForPublic,
-    ...(!token ? routesForNotAuthenticatedOnly : []),
+    ...((!token && routesForNotAuthenticatedOnly) || []),
     ...routesForAuthenticatedOnly,
   ]);
 
   // Provide the router configuration using RouterProvider
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />;
+    </>
+  );
 };
 
 export default Routes;
