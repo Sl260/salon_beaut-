@@ -1,5 +1,8 @@
+import { useEffect, useState } from "react";
 import Appointments from "../components/appointments/Appointments";
 import Header from "../components/header/Header";
+import axios from "axios";
+import { useAuth } from "../provider/authProvider";
 
 const fakeAppointments = [
   {
@@ -38,11 +41,28 @@ const fakeAppointments = [
     date: "2024-03-05 11:30 AM",
   },
 ];
+
 const AppointmentsPage = () => {
+  const [data, setData] = useState([]);
+  const { token } = useAuth();
+
+  const config = {
+    authorization: `Bearer ${token}`,
+  };
+  const BACKEND_URL = "http://localhost:5000/appointments";
+
+  useEffect(() => {
+    try {
+      axios.get(BACKEND_URL, config).then((res) => setData(res.data));
+    } catch (error) {
+      console.log("error", error);
+    }
+  }, [data.length]);
+
   return (
     <>
       <Header />
-      <Appointments appointments={fakeAppointments} />
+      <Appointments appointments={data} />
     </>
   );
 };

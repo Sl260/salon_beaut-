@@ -2,39 +2,29 @@ require("dotenv").config({ path: "../.env" });
 const Appointment = require("../Model/Appointment");
 
 exports.createAppointment = (req, res) => {
-  const { email, firstName, lastName, date } = JSON.parse(req.body.body);
+  const { email, firstName, lastName, date } = JSON.parse(req.body);
+  console.log("new", req.body);
 
-  // First check database to see if a user exists, before registering one
-  Appointment.find({ date }, (err, result) => {
-    if (err) {
-      res.status(400).json({
-        message: "Cannot query Appointment Collection. " + err,
-      });
-    } else {
-      // Create appointment
-      let newAppointment = new Appointment({
-        email,
-        firstName,
-        lastName,
-        date,
-      });
-
-      newAppointment
-        .save()
-        .then(() => {
-          res
-            .status(201)
-            .json({ message: "Appointment registered successfully" });
-        })
-        .catch((err) => {
-          res.status(400).json({
-            message: "Cannot register an appointment" + err,
-          });
-        });
-
-      res.status(200).json({ message: "Created successfully" });
-    }
+  // Create appointment
+  let newAppointment = new Appointment({
+    firstName,
+    lastName,
+    email,
+    date,
   });
+
+  console.log("new", newAppointment);
+
+  newAppointment
+    .save()
+    .then(() => {
+      res.status(201).json({ message: "Appointment registered successfully" });
+    })
+    .catch((err) => {
+      res.status(400).json({
+        message: "Cannot register an appointment" + err,
+      });
+    });
 };
 
 // update appointment
@@ -58,7 +48,11 @@ exports.updateAppointment = async (req, res) => {
 
 exports.getAppointments = async (req, res) => {
   try {
+    console.log("hit");
+
     const appointments = await Appointment.find();
+    console.log("hit");
+
     res.status(200).json(appointments);
   } catch (error) {
     res.status(400).json({ message: error.message });

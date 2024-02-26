@@ -1,5 +1,8 @@
 /* eslint-disable react/prop-types */
+import axios from "axios";
 import styled from "styled-components";
+import { useAuth } from "../../provider/authProvider";
+import { useNavigate } from "react-router-dom";
 
 const AppointmentsContainer = styled.div`
   max-width: 800px;
@@ -42,6 +45,17 @@ const ActionButton = styled.button`
 `;
 
 const Appointments = ({ appointments }) => {
+  const { token } = useAuth();
+  const navigate = useNavigate();
+
+  const config = {
+    authorization: `Bearer ${token}`,
+  };
+
+  const handleDelete = (id) => {
+    axios.delete(`http://localhost:5000/delete-appointment/${id}`, config);
+    navigate("/appointments", { replace: true });
+  };
   return (
     <AppointmentsContainer>
       {appointments?.map((appointment) => (
@@ -58,7 +72,11 @@ const Appointments = ({ appointments }) => {
             <ActionButton backgroundColor="#007bff" hoverColor="#0056b3">
               <>Edit</>
             </ActionButton>
-            <ActionButton backgroundColor="#dc3545" hoverColor="#c82333">
+            <ActionButton
+              onClick={() => handleDelete(appointment?._id)}
+              backgroundColor="#dc3545"
+              hoverColor="#c82333"
+            >
               <>delete</>
             </ActionButton>
           </ActionsContainer>
