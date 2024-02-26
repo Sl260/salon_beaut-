@@ -2,7 +2,7 @@ require("dotenv").config({ path: "../.env" });
 const Appointment = require("../Model/Appointment");
 
 exports.createAppointment = (req, res) => {
-  const { email, firstName, lastName, date } = JSON.parse(req.body);
+  const { email, firstName, lastName, date } = req.body;
   console.log("new", req.body);
 
   // Create appointment
