@@ -1,14 +1,17 @@
 import styled from "styled-components";
-
+import salon_beaute from "../../assets/salon beaute.jpg"
+import cheveux from "../../assets/cheveux.jpg"
+import soin_peau from "../../assets/soin peau1.jpg"
+import make_up from "../../assets/MAKE UP 1.jpg"
 const BeautyShop = () => {
   return (
     <Container>
       <Header>
         <Logo
-          src="https://picsum.photos/id/1025/800/600?grayscale"
+          src={salon_beaute}
           alt="Beauty Shop Logo"
         />
-        <h1>Embrace Your Beauty</h1>
+        <h1>SNM, L'APPART BEAUTE </h1>
         <p>Indulge in a luxurious experience at our beauty haven.</p>
       </Header>
       <Main>
@@ -16,7 +19,7 @@ const BeautyShop = () => {
         <Section>
           <ServiceCard>
             <ServiceImage
-              src="https://picsum.photos/id/300/300?grayscale"
+              src={cheveux}
               alt="Hair Care Service"
             />
             <h3>Hair Care</h3>
@@ -24,7 +27,7 @@ const BeautyShop = () => {
           </ServiceCard>
           <ServiceCard>
             <ServiceImage
-              src="https://picsum.photos/id/200/300?grayscale"
+              src={soin_peau}
               alt="Skin Care Service"
             />
             <h3>Skin Care</h3>
@@ -32,7 +35,7 @@ const BeautyShop = () => {
           </ServiceCard>
           <ServiceCard>
             <ServiceImage
-              src="https://picsum.photos/id/1035/300?grayscale"
+              src={make_up}
               alt="Makeup Service"
             />
             <h3>Makeup</h3>
