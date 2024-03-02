@@ -25,15 +25,20 @@ const services = [
   },
 ];
 
+import salon_beaute from "../../assets/salon beaute.jpg"
+import cheveux from "../../assets/cheveux.jpg"
+import soin_peau from "../../assets/soin peau1.jpg"
+import make_up from "../../assets/MAKE UP 1.jpg"
+
 const BeautyShop = () => {
   return (
     <Container>
       <Header>
         <Logo
-          src="https://picsum.photos/id/1025/800/600?grayscale"
+          src={salon_beaute}
           alt="Beauty Shop Logo"
         />
-        <h1>Embrace Your Beauty</h1>
+        <h1>SNM, L'APPART BEAUTE </h1>
         <p>Indulge in a luxurious experience at our beauty haven.</p>
 
         <Button href="/appointment">Book an Appointment</Button>
