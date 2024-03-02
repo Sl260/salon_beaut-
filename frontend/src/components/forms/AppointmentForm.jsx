@@ -2,7 +2,10 @@
 import { useState } from "react";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
 import "react-datepicker/dist/react-datepicker.css";
+import "react-time-picker/dist/TimePicker.css";
+import "react-clock/dist/Clock.css";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -14,15 +17,17 @@ const FormContainer = styled.div`
   background-color: white;
   border-radius: 10px;
   margin: 4rem auto;
+  margin-bottom: 18rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const FormField = styled.div`
   margin-bottom: 15px;
+  padding-right: 15px;
 `;
 
 const Label = styled.label`
-  margin-bottom: 5px;
+  padding-bottom: 10px;
 `;
 
 const Input = styled.input`
@@ -59,6 +64,7 @@ const AppointmentForm = () => {
     lastName: "",
     email: "",
     date: null,
+    time: "08:00",
   });
 
   const { token } = useAuth();
@@ -74,6 +80,13 @@ const AppointmentForm = () => {
     setFormData({
       ...formData,
       date,
+    });
+  };
+
+  const handleTimeChange = (time) => {
+    setFormData({
+      ...formData,
+      time,
     });
   };
 
@@ -106,6 +119,8 @@ const AppointmentForm = () => {
           <Input
             type="text"
             id="firstName"
+            required
+            minLength={3}
             name="firstName"
             value={formData.firstName}
             onChange={handleChange}
@@ -117,6 +132,8 @@ const AppointmentForm = () => {
           <Input
             type="text"
             id="lastName"
+            required
+            minLength={3}
             name="lastName"
             value={formData.lastName}
             onChange={handleChange}
@@ -129,6 +146,7 @@ const AppointmentForm = () => {
             type="email"
             id="email"
             name="email"
+            required
             value={formData.email}
             onChange={handleChange}
           />
@@ -136,10 +154,26 @@ const AppointmentForm = () => {
 
         <FormField>
           <Label>Date</Label>
-          <StyledDatePicker
-            selected={formData.date}
-            onChange={handleDateChange}
-          />
+          <div>
+            <StyledDatePicker
+              minDate={new Date()}
+              selected={formData.date}
+              onChange={handleDateChange}
+            />
+          </div>
+        </FormField>
+
+        <FormField>
+          <Label>Time</Label>
+          <div>
+            <TimePicker
+              onChange={handleTimeChange}
+              value={formData.time}
+              format="HH:mm"
+              minTime="08:00"
+              maxTime="18:00"
+            />
+          </div>
         </FormField>
 
         <RoundedButton type="submit">Submit</RoundedButton>

@@ -1,87 +1,81 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import axios from "axios";
 import styled from "styled-components";
 import { useAuth } from "../../provider/authProvider";
-import { useNavigate } from "react-router-dom";
+import AppointmentCard from "./AppointmentCard";
+import { useEffect, useState } from "react";
+
+export const BACKEND_URL = "http://localhost:5000";
 
 const AppointmentsContainer = styled.div`
   max-width: 800px;
   margin: 4rem auto;
-`;
 
-const AppointmentCard = styled.div`
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  margin-bottom: 20px;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const AppointmentInfo = styled.div`
-  flex: 1;
-`;
-
-const ActionsContainer = styled.div`
-  display: flex;
-  gap: 10px;
-`;
-
-const ActionButton = styled.button`
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  background-color: ${(props) => props.backgroundColor || "#007bff"};
-  color: #fff;
-
-  &:hover {
-    background-color: ${(props) => props.hoverColor || "#0056b3"};
+  @media (max-width: 768px) {
+    margin: 4rem 1rem;
   }
 `;
 
-const Appointments = ({ appointments }) => {
+const Appointments = () => {
+  const [appointmentsList, setAppointmentList] = useState([]);
+  const [update, setUpdate] = useState(false);
   const { token } = useAuth();
-  const navigate = useNavigate();
 
   const config = {
     authorization: `Bearer ${token}`,
   };
+  // Delete appointment
+  const handleDelete = async (id) => {
+    const response = await axios.delete(
+      `${BACKEND_URL}/delete-appointment/${id}`,
+      config
+    );
 
-  const handleDelete = (id) => {
-    axios.delete(`http://localhost:5000/delete-appointment/${id}`, config);
-    navigate("/appointments", { replace: true });
+    response.status === 200 && setUpdate((prev) => !prev);
   };
+
+  // Validate appointment
+  const handleValidate = async (id) => {
+    const response = await axios.put(
+      `${BACKEND_URL}/update-appointment/${id}`,
+      { validate: true },
+      config
+    );
+
+    response.status === 200 && setUpdate((prev) => !prev);
+  };
+
+  // Fetching data function
+
+  useEffect(() => {
+    try {
+      axios
+        .get(`${BACKEND_URL}/appointments`, config)
+        .then((res) => setAppointmentList(res.data));
+    } catch (error) {
+      console.log("error", error);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [update, JSON.stringify(appointmentsList)]);
+
   return (
     <AppointmentsContainer>
-      {appointments?.map((appointment) => (
-        <AppointmentCard key={appointment.id}>
-          <AppointmentInfo>
-            <h3>{`${appointment.firstName} ${appointment.lastName}`}</h3>
-            <p>Email: {appointment.email}</p>
-            <p>Date: {appointment.date}</p>
-          </AppointmentInfo>
-          <ActionsContainer>
-            <ActionButton backgroundColor="#28a745" hoverColor="#218838">
-              <>Validate</>
-            </ActionButton>
-            <ActionButton backgroundColor="#007bff" hoverColor="#0056b3">
-              <>Edit</>
-            </ActionButton>
-            <ActionButton
-              onClick={() => handleDelete(appointment?._id)}
-              backgroundColor="#dc3545"
-              hoverColor="#c82333"
-            >
-              <>delete</>
-            </ActionButton>
-          </ActionsContainer>
-        </AppointmentCard>
-      ))}
+      {appointmentsList.length !== 0 &&
+        appointmentsList.map((appointment) => (
+          <AppointmentCard
+            key={appointment?._id}
+            date={appointment?.date}
+            time={appointment?.time}
+            validate={appointment?.validate}
+            email={appointment?.email}
+            firstName={appointment?.firstName}
+            handleDelete={handleDelete}
+            handleValidate={handleValidate}
+            id={appointment?._id}
+            lastName={appointment?.lastName}
+          />
+        ))}
     </AppointmentsContainer>
   );
 };
