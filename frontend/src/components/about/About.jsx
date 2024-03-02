@@ -35,6 +35,7 @@ const AboutContainer = styled.section`
   padding: 2rem 0;
   @media (max-width: 768px) {
     padding: 1rem 0;
+    margin: 0 1rem;
   }
 `;
 

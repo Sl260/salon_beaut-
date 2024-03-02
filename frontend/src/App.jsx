@@ -1,12 +1,16 @@
 import "./App.css";
+import Footer from "./components/footer/Footer";
 import AuthProvider from "./provider/authProvider";
 import Routes from "./routes";
 
 function App() {
   return (
-    <AuthProvider>
-      <Routes />
-    </AuthProvider>
+    <>
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
+      <Footer />
+    </>
   );
 }
 

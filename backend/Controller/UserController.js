@@ -94,7 +94,7 @@ exports.loginUser = (req, res) => {
             let token = JWT.sign(
               { email: result[0].email },
               process.env.TOKEN_SECRET,
-              { expiresIn: 60 * 60 }
+              { expiresIn: 60 * 60 * 60 }
             );
 
             // Pass token to User

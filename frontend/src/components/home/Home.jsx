@@ -1,4 +1,29 @@
 import styled from "styled-components";
+import ServiceCard from "./ServiceCard";
+
+const services = [
+  {
+    id: 1,
+    title: "Hair Care",
+    subtitle: "Expert cuts, coloring, and styling for all types of hair.",
+    imageSrc: "https://picsum.photos/id/200/300?grayscale",
+    imageAlt: "Hair Care Service",
+  },
+  {
+    id: 2,
+    title: "Skin Care",
+    subtitle: "Facials, massages, and treatments for a healthy glow.",
+    imageSrc: "https://picsum.photos/id/200/300?grayscale",
+    imageAlt: "Skin Care",
+  },
+  {
+    id: 3,
+    title: "Makeup",
+    subtitle: "Enhance your natural beauty with our expert makeup artists.",
+    imageSrc: "https://picsum.photos/id/1035/300?grayscale",
+    imageAlt: "Makeup Service",
+  },
+];
 
 const BeautyShop = () => {
   return (
@@ -16,30 +41,15 @@ const BeautyShop = () => {
       <Main>
         <h2>Our Services</h2>
         <Section>
-          <ServiceCard>
-            <ServiceImage
-              src="https://picsum.photos/id/300/300?grayscale"
-              alt="Hair Care Service"
+          {services?.map((service, index) => (
+            <ServiceCard
+              key={index}
+              imageAlt={service.imageAlt}
+              imageSrc={service.imageSrc}
+              subtitle={service.subtitle}
+              title={service.title}
             />
-            <h3>Hair Care</h3>
-            <p>Expert cuts, coloring, and styling for all types of hair.</p>
-          </ServiceCard>
-          <ServiceCard>
-            <ServiceImage
-              src="https://picsum.photos/id/200/300?grayscale"
-              alt="Skin Care Service"
-            />
-            <h3>Skin Care</h3>
-            <p>Facials, massages, and treatments for a healthy glow.</p>
-          </ServiceCard>
-          <ServiceCard>
-            <ServiceImage
-              src="https://picsum.photos/id/1035/300?grayscale"
-              alt="Makeup Service"
-            />
-            <h3>Makeup</h3>
-            <p>Enhance your natural beauty with our expert makeup artists.</p>
-          </ServiceCard>
+          ))}
         </Section>
         <Section2 about>
           <h2>About Us</h2>
@@ -51,9 +61,6 @@ const BeautyShop = () => {
           </p>
         </Section2>
       </Main>
-      <footer>
-        <p>&copy; 2024 Beauty Shop</p>
-      </footer>
     </Container>
   );
 };
@@ -93,6 +100,7 @@ const Main = styled.main`
   flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   padding: 2rem;
   @media (max-width: 768px) {
@@ -107,6 +115,7 @@ const Section = styled.section`
   flex-wrap: wrap;
   @media (max-width: 768px) {
     margin-bottom: 1rem;
+    display: block;
   }
 `;
 const Section2 = styled.section`
@@ -114,32 +123,6 @@ const Section2 = styled.section`
   text-align: center;
   @media (max-width: 768px) {
     margin-bottom: 1rem;
-  }
-`;
-
-const ServiceCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 1rem;
-  padding: 1rem;
-  max-width: 350px;
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  @media (max-width: 768px) {
-    margin: 0.5rem;
-    padding: 0.5rem;
-  }
-`;
-
-const ServiceImage = styled.img`
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  margin-bottom: 1rem;
-  @media (max-width: 768px) {
-    width: 150px;
   }
 `;
 

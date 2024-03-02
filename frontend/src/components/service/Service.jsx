@@ -45,6 +45,7 @@ export default Services;
 const ServiceContainer = styled.section`
   padding: 2rem 0;
   text-align: center;
+  margin-bottom: 18rem;
   @media (max-width: 768px) {
     padding: 1rem 0;
   }
@@ -56,6 +57,7 @@ const ServiceGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   @media (max-width: 768px) {
+    margin: 0 1rem;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
 `;

@@ -67,7 +67,7 @@ const Routes = () => {
   // Provide the router configuration using RouterProvider
   return (
     <>
-      <RouterProvider router={router} />;
+      <RouterProvider router={router} />
     </>
   );
 };

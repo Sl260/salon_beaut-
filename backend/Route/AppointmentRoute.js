@@ -12,7 +12,7 @@ router.get(
   auth.auth,
   AppointmentController.getAppointmentById
 );
-router.patch(
+router.put(
   "/update-appointment/:id",
   auth.auth,
   AppointmentController.updateAppointment

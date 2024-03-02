@@ -8,6 +8,7 @@ import toast, { Toaster } from "react-hot-toast";
 // Styled components for the login form
 const LoginFormContainer = styled.div`
   padding-top: 12rem;
+  padding-bottom: 12rem;
   display: flex;
   flex-direction: column;
   align-items: center;

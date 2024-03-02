@@ -2,8 +2,7 @@ require("dotenv").config({ path: "../.env" });
 const Appointment = require("../Model/Appointment");
 
 exports.createAppointment = (req, res) => {
-  const { email, firstName, lastName, date } = req.body;
-  console.log("new", req.body);
+  const { email, firstName, lastName, date, time } = req.body;
 
   // Create appointment
   let newAppointment = new Appointment({
@@ -11,9 +10,8 @@ exports.createAppointment = (req, res) => {
     lastName,
     email,
     date,
+    time,
   });
-
-  console.log("new", newAppointment);
 
   newAppointment
     .save()
@@ -31,10 +29,11 @@ exports.createAppointment = (req, res) => {
 
 exports.updateAppointment = async (req, res) => {
   const id = req.params.id;
+  const { validate } = JSON.parse(req.body);
   try {
     const updatedAppointment = await Appointment.findOneAndUpdate(
       { id: id },
-      req.body,
+      { validate: validate },
       { new: true }
     );
 
@@ -48,10 +47,7 @@ exports.updateAppointment = async (req, res) => {
 
 exports.getAppointments = async (req, res) => {
   try {
-    console.log("hit");
-
     const appointments = await Appointment.find();
-    console.log("hit");
 
     res.status(200).json(appointments);
   } catch (error) {
